@@ -1,11 +1,12 @@
 /**
  * Authentication Context
- * 
+ *
  * This file provides a React context for authentication state and methods.
  */
 
-import { createContext, useContext, ReactNode } from 'react';
-import { User } from 'firebase/auth';
+import { createContext, useContext } from 'react';
+import type { ReactNode } from 'react';
+import type { User } from 'firebase/auth';
 
 import { useAuthState, useAuth } from '@/hooks/useAuth';
 
@@ -61,11 +62,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 // Custom hook to use the auth context
 export const useAuthContext = (): AuthContextType => {
   const context = useContext(AuthContext);
-  
+
   if (context === undefined) {
     throw new Error('useAuthContext must be used within an AuthProvider');
   }
-  
+
   return context;
 };
 

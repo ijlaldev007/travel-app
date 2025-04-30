@@ -1,14 +1,14 @@
 /**
  * Authentication hooks
- * 
+ *
  * This file provides React hooks for Firebase Authentication.
  */
 
 import { useState, useEffect, useCallback } from 'react';
-import { 
-  User, 
-  createUserWithEmailAndPassword, 
-  signInWithEmailAndPassword, 
+import type { User } from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   signOut as firebaseSignOut,
   onAuthStateChanged,
   GoogleAuthProvider,
@@ -65,16 +65,16 @@ export const useAuth = () => {
   const signUp = useCallback(async (email: string, password: string, displayName?: string) => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      
+
       // Update profile if display name is provided
       if (displayName && userCredential.user) {
         await updateProfile(userCredential.user, { displayName });
         await sendEmailVerification(userCredential.user);
       }
-      
+
       return userCredential.user;
     } catch (err) {
       setError(err as Error);
@@ -88,7 +88,7 @@ export const useAuth = () => {
   const signIn = useCallback(async (email: string, password: string) => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       return userCredential.user;
@@ -104,7 +104,7 @@ export const useAuth = () => {
   const signInWithGoogle = useCallback(async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const provider = new GoogleAuthProvider();
       const userCredential = await signInWithPopup(auth, provider);
@@ -121,7 +121,7 @@ export const useAuth = () => {
   const signOut = useCallback(async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
       await firebaseSignOut(auth);
     } catch (err) {
@@ -136,7 +136,7 @@ export const useAuth = () => {
   const resetPassword = useCallback(async (email: string) => {
     setLoading(true);
     setError(null);
-    
+
     try {
       await sendPasswordResetEmail(auth, email);
     } catch (err) {
