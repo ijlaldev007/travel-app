@@ -1,3 +1,6 @@
+// Application constants
+export const SITE_NAME = "Raahi";
+
 // Define our own AxisModel interface to replace Syncfusion's
 interface AxisModel {
   valueType?: string;
@@ -94,6 +97,14 @@ export const budgetOptions = ["Budget", "Mid-range", "Luxury", "Premium"];
 export const groupTypes = ["Solo", "Couple", "Family", "Friends", "Business"];
 
 export const footers = ["Terms & Condition", "Privacy Policy"];
+
+// Define TripFormData interface
+interface TripFormData {
+  groupType: string;
+  travelStyle: string;
+  interest: string;
+  budget: string;
+}
 
 export const selectItems = [
   "groupType",
