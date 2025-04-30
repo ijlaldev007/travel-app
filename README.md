@@ -1,4 +1,4 @@
-# Travel App
+# Raahi - Travel App
 
 A modern, full-stack travel planning and booking application built with React Router 7 and TypeScript.
 
@@ -80,7 +80,7 @@ We're transitioning from Syncfusion to Shadcn UI for our component needs. Based 
 
 ### Authentication Components
 - **AuthCard**: A centered card container for authentication forms with rounded corners and drop shadow
-- **Logo**: The Tourvisto logo component that can be reused across the app
+- **Logo**: The Raahi logo component that can be reused across the app
 - **SocialButton**: Button for social authentication (Google Sign-in)
 - **AuthBackground**: Full-screen background with travel-themed illustration
 
@@ -125,7 +125,7 @@ We're transitioning from Syncfusion to Shadcn UI for our component needs. Based 
 ### Layout Components
 - **AppShell**: Main application layout with sidebar and content area
 - **Sidebar**: Navigation sidebar with:
-  - Logo at the top (Tourvisto with globe icon)
+  - Logo at the top (Raahi with globe icon)
   - Active state highlighting for current section (blue background)
   - Icon + text navigation items (Dashboard, All Users, All Trips)
   - User profile section at bottom with avatar and notification indicator
