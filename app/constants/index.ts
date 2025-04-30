@@ -1,4 +1,12 @@
-import type { AxisModel } from "@syncfusion/ej2-react-charts";
+// Define our own AxisModel interface to replace Syncfusion's
+interface AxisModel {
+  valueType?: string;
+  title?: string;
+  minimum?: number;
+  maximum?: number;
+  interval?: number;
+  majorGridLines?: { width: number };
+}
 
 export const sidebarItems = [
   {
