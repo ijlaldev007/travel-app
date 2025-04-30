@@ -19,159 +19,159 @@
 ### 1. Project Setup & Configuration
 
 #### 1.1 Development Environment Setup
-- [ ] Initialize React + TypeScript project with Vite
-  - Configure TypeScript with strict mode enabled to catch type errors early
-  - Set up path aliases for cleaner imports (e.g., `@components/`, `@hooks/`)
-  - Configure environment variables with type safety (create env.d.ts)
-  - Set up proper tsconfig.json with appropriate target and module settings
-  - Configure Vite for optimal development experience (plugins, server settings)
+- [ ] 1.1.1 Initialize React + TypeScript project with Vite
+  - 1.1.1.1 Configure TypeScript with strict mode enabled to catch type errors early
+  - 1.1.1.2 Set up path aliases for cleaner imports (e.g., `@components/`, `@hooks/`)
+  - 1.1.1.3 Configure environment variables with type safety (create env.d.ts)
+  - 1.1.1.4 Set up proper tsconfig.json with appropriate target and module settings
+  - 1.1.1.5 Configure Vite for optimal development experience (plugins, server settings)
 
-- [ ] Configure ESLint and Prettier for code quality
-  - Install ESLint plugins for React, TypeScript, and accessibility
-  - Set up Prettier with team-agreed formatting rules
-  - Configure husky pre-commit hooks to enforce linting and formatting
-  - Add lint-staged to only check changed files
-  - Create custom ESLint rules for project-specific requirements
-  - Add import sorting rules to maintain consistent import order
+- [ ] 1.1.2 Configure ESLint and Prettier for code quality
+  - 1.1.2.1 Install ESLint plugins for React, TypeScript, and accessibility
+  - 1.1.2.2 Set up Prettier with team-agreed formatting rules
+  - 1.1.2.3 Configure husky pre-commit hooks to enforce linting and formatting
+  - 1.1.2.4 Add lint-staged to only check changed files
+  - 1.1.2.5 Create custom ESLint rules for project-specific requirements
+  - 1.1.2.6 Add import sorting rules to maintain consistent import order
 
-- [ ] Set up Tailwind CSS with custom theme configuration
-  - Define color palette variables based on design system
-  - Configure custom spacing, typography, and breakpoint scales
-  - Set up dark mode support from the beginning
-  - Create component-specific Tailwind plugins if needed
-  - Configure PurgeCSS settings to minimize production CSS size
-  - Set up design tokens as CSS variables for theme switching capability
+- [ ] 1.1.3 Set up Tailwind CSS with custom theme configuration
+  - 1.1.3.1 Define color palette variables based on design system
+  - 1.1.3.2 Configure custom spacing, typography, and breakpoint scales
+  - 1.1.3.3 Set up dark mode support from the beginning
+  - 1.1.3.4 Create component-specific Tailwind plugins if needed
+  - 1.1.3.5 Configure PurgeCSS settings to minimize production CSS size
+  - 1.1.3.6 Set up design tokens as CSS variables for theme switching capability
 
-- [ ] Initialize Shadcn UI components
-  - Configure component theming to match design system
-  - Create a component registry to track which components are being used
-  - Set up storybook for component documentation and testing
-  - Establish component extension patterns for customizing Shadcn components
-  - Create utility functions for common component prop patterns
-  - Document component usage guidelines for the team
+- [ ] 1.1.4 Initialize Shadcn UI components
+  - 1.1.4.1 Configure component theming to match design system
+  - 1.1.4.2 Create a component registry to track which components are being used
+  - 1.1.4.3 Set up storybook for component documentation and testing
+  - 1.1.4.4 Establish component extension patterns for customizing Shadcn components
+  - 1.1.4.5 Create utility functions for common component prop patterns
+  - 1.1.4.6 Document component usage guidelines for the team
 
-- [ ] Configure Git repository with branching strategy
-  - Set up main, development, and feature branch structure
-  - Create PR templates with required information and checklists
-  - Configure branch protection rules for main and development branches
-  - Set up conventional commit message format
-  - Create .gitignore with comprehensive rules for the project
-  - Document Git workflow for the team (branching, merging, etc.)
+- [ ] 1.1.5 Configure Git repository with branching strategy
+  - 1.1.5.1 Set up main, development, and feature branch structure
+  - 1.1.5.2 Create PR templates with required information and checklists
+  - 1.1.5.3 Configure branch protection rules for main and development branches
+  - 1.1.5.4 Set up conventional commit message format
+  - 1.1.5.5 Create .gitignore with comprehensive rules for the project
+  - 1.1.5.6 Document Git workflow for the team (branching, merging, etc.)
 
-- [ ] Set up CI/CD pipeline for automated testing and deployment
-  - Configure GitHub Actions or similar CI service
-  - Set up automated testing for each PR
-  - Configure build process with environment-specific settings
-  - Set up automated deployment to Firebase hosting
-  - Implement deployment previews for PRs
-  - Configure monitoring and alerting for deployment failures
-  - Set up automated dependency updates with security checks
+- [ ] 1.1.6 Set up CI/CD pipeline for automated testing and deployment
+  - 1.1.6.1 Configure GitHub Actions or similar CI service
+  - 1.1.6.2 Set up automated testing for each PR
+  - 1.1.6.3 Configure build process with environment-specific settings
+  - 1.1.6.4 Set up automated deployment to Firebase hosting
+  - 1.1.6.5 Implement deployment previews for PRs
+  - 1.1.6.6 Configure monitoring and alerting for deployment failures
+  - 1.1.6.7 Set up automated dependency updates with security checks
 
 #### 1.2 Firebase Configuration
-- [ ] Create Firebase project in Firebase Console
-  - Set up multiple environments (development, staging, production)
-  - Configure proper billing alerts to prevent unexpected charges
-  - Set up team access with appropriate permission levels
-  - Enable Google Analytics for Firebase for usage tracking
-  - Document Firebase project IDs and settings for team reference
-  - Configure proper regional settings based on target audience location
+- [ ] 1.2.1 Create Firebase project in Firebase Console
+  - 1.2.1.1 Set up multiple environments (development, staging, production)
+  - 1.2.1.2 Configure proper billing alerts to prevent unexpected charges
+  - 1.2.1.3 Set up team access with appropriate permission levels
+  - 1.2.1.4 Enable Google Analytics for Firebase for usage tracking
+  - 1.2.1.5 Document Firebase project IDs and settings for team reference
+  - 1.2.1.6 Configure proper regional settings based on target audience location
 
-- [ ] Configure Firebase Authentication with email/password and Google sign-in
-  - Set up email templates for verification, password reset, etc.
-  - Configure authentication session duration settings
-  - Implement proper security settings (password strength, etc.)
-  - Set up account blocking for suspicious activities
-  - Configure multi-factor authentication options
-  - Test authentication flows on multiple devices and browsers
-  - Set up proper error handling for authentication failures
+- [ ] 1.2.2 Configure Firebase Authentication with email/password and Google sign-in
+  - 1.2.2.1 Set up email templates for verification, password reset, etc.
+  - 1.2.2.2 Configure authentication session duration settings
+  - 1.2.2.3 Implement proper security settings (password strength, etc.)
+  - 1.2.2.4 Set up account blocking for suspicious activities
+  - 1.2.2.5 Configure multi-factor authentication options
+  - 1.2.2.6 Test authentication flows on multiple devices and browsers
+  - 1.2.2.7 Set up proper error handling for authentication failures
 
-- [ ] Set up Firestore database with initial collections and security rules
-  - Design database schema with scalability in mind
-  - Create comprehensive security rules to protect data
-  - Set up proper indexing for frequently queried fields
-  - Configure backup schedule and retention policy
-  - Plan for data migration strategies as schema evolves
-  - Document collection and field naming conventions
-  - Set up data validation rules to ensure data integrity
-  - Configure TTL (Time To Live) for temporary data
+- [ ] 1.2.3 Set up Firestore database with initial collections and security rules
+  - 1.2.3.1 Design database schema with scalability in mind
+  - 1.2.3.2 Create comprehensive security rules to protect data
+  - 1.2.3.3 Set up proper indexing for frequently queried fields
+  - 1.2.3.4 Configure backup schedule and retention policy
+  - 1.2.3.5 Plan for data migration strategies as schema evolves
+  - 1.2.3.6 Document collection and field naming conventions
+  - 1.2.3.7 Set up data validation rules to ensure data integrity
+  - 1.2.3.8 Configure TTL (Time To Live) for temporary data
 
-- [ ] Configure Firebase Storage with appropriate security rules
-  - Set up folder structure for different asset types
-  - Create security rules based on user roles and ownership
-  - Configure CORS settings for frontend access
-  - Set up file size limits and type restrictions
-  - Plan for image resizing and optimization workflows
-  - Configure backup strategy for uploaded assets
-  - Set up CDN configuration for faster global access
+- [ ] 1.2.4 Configure Firebase Storage with appropriate security rules
+  - 1.2.4.1 Set up folder structure for different asset types
+  - 1.2.4.2 Create security rules based on user roles and ownership
+  - 1.2.4.3 Configure CORS settings for frontend access
+  - 1.2.4.4 Set up file size limits and type restrictions
+  - 1.2.4.5 Plan for image resizing and optimization workflows
+  - 1.2.4.6 Configure backup strategy for uploaded assets
+  - 1.2.4.7 Set up CDN configuration for faster global access
 
-- [ ] Set up Firebase Hosting with custom domain
-  - Configure SSL certificates properly
-  - Set up caching rules for static assets
-  - Configure redirects for common paths and legacy URLs
-  - Set up custom error pages (404, 500, etc.)
-  - Configure proper headers for security (CSP, HSTS, etc.)
-  - Set up multiple site channels for staging/production
-  - Configure CI/CD integration for automated deployments
+- [ ] 1.2.5 Set up Firebase Hosting with custom domain
+  - 1.2.5.1 Configure SSL certificates properly
+  - 1.2.5.2 Set up caching rules for static assets
+  - 1.2.5.3 Configure redirects for common paths and legacy URLs
+  - 1.2.5.4 Set up custom error pages (404, 500, etc.)
+  - 1.2.5.5 Configure proper headers for security (CSP, HSTS, etc.)
+  - 1.2.5.6 Set up multiple site channels for staging/production
+  - 1.2.5.7 Configure CI/CD integration for automated deployments
 
-- [ ] Initialize Firebase Cloud Functions environment
-  - Set up proper Node.js runtime version
-  - Configure environment variables securely
-  - Set up TypeScript configuration for functions
-  - Create proper error handling and logging
-  - Configure memory and timeout settings appropriately
-  - Set up proper IAM roles and permissions
-  - Plan for cold start mitigation strategies
-  - Configure proper region deployment for functions
+- [ ] 1.2.6 Initialize Firebase Cloud Functions environment
+  - 1.2.6.1 Set up proper Node.js runtime version
+  - 1.2.6.2 Configure environment variables securely
+  - 1.2.6.3 Set up TypeScript configuration for functions
+  - 1.2.6.4 Create proper error handling and logging
+  - 1.2.6.5 Configure memory and timeout settings appropriately
+  - 1.2.6.6 Set up proper IAM roles and permissions
+  - 1.2.6.7 Plan for cold start mitigation strategies
+  - 1.2.6.8 Configure proper region deployment for functions
 
 #### 1.3 Project Structure & Architecture
-- [ ] Define folder structure for components, hooks, utils, and pages
-  - Create a scalable component organization strategy (atomic design or similar)
-  - Set up proper module boundaries to prevent circular dependencies
-  - Establish naming conventions for files and folders
-  - Create documentation for folder structure and organization rules
-  - Set up barrel exports for cleaner imports
-  - Plan for code splitting boundaries to optimize bundle size
-  - Configure absolute imports for cleaner import statements
+- [ ] 1.3.1 Define folder structure for components, hooks, utils, and pages
+  - 1.3.1.1 Create a scalable component organization strategy (atomic design or similar)
+  - 1.3.1.2 Set up proper module boundaries to prevent circular dependencies
+  - 1.3.1.3 Establish naming conventions for files and folders
+  - 1.3.1.4 Create documentation for folder structure and organization rules
+  - 1.3.1.5 Set up barrel exports for cleaner imports
+  - 1.3.1.6 Plan for code splitting boundaries to optimize bundle size
+  - 1.3.1.7 Configure absolute imports for cleaner import statements
 
-- [ ] Set up routing with React Router 7
-  - Implement route-based code splitting for performance
-  - Create route guards for authenticated routes
-  - Set up nested routes for complex page hierarchies
-  - Implement route transitions and loading states
-  - Configure 404 handling and fallback routes
-  - Set up route-based analytics tracking
-  - Create typed route parameters for type safety
-  - Implement proper history management and deep linking
+- [ ] 1.3.2 Set up routing with React Router 7
+  - 1.3.2.1 Implement route-based code splitting for performance
+  - 1.3.2.2 Create route guards for authenticated routes
+  - 1.3.2.3 Set up nested routes for complex page hierarchies
+  - 1.3.2.4 Implement route transitions and loading states
+  - 1.3.2.5 Configure 404 handling and fallback routes
+  - 1.3.2.6 Set up route-based analytics tracking
+  - 1.3.2.7 Create typed route parameters for type safety
+  - 1.3.2.8 Implement proper history management and deep linking
 
-- [ ] Create base layout components (AppShell, Sidebar, Header)
-  - Build responsive layouts that work across device sizes
-  - Implement proper accessibility for navigation components
-  - Create layout context for layout-specific state management
-  - Build layout switching capability for different user roles
-  - Implement proper focus management for modals and drawers
-  - Create skeleton layouts for loading states
-  - Set up layout persistence between navigation
-  - Implement proper z-index management for overlays
+- [ ] 1.3.3 Create base layout components (AppShell, Sidebar, Header)
+  - 1.3.3.1 Build responsive layouts that work across device sizes
+  - 1.3.3.2 Implement proper accessibility for navigation components
+  - 1.3.3.3 Create layout context for layout-specific state management
+  - 1.3.3.4 Build layout switching capability for different user roles
+  - 1.3.3.5 Implement proper focus management for modals and drawers
+  - 1.3.3.6 Create skeleton layouts for loading states
+  - 1.3.3.7 Set up layout persistence between navigation
+  - 1.3.3.8 Implement proper z-index management for overlays
 
-- [ ] Implement responsive design breakpoints
-  - Define breakpoints based on device usage analytics
-  - Create utility hooks for responsive behavior
-  - Set up responsive typography system
-  - Implement container queries for component-level responsiveness
-  - Create testing utilities for different viewport sizes
-  - Document responsive design patterns for the team
-  - Implement proper touch targets for mobile devices
-  - Set up responsive image handling
+- [ ] 1.3.4 Implement responsive design breakpoints
+  - 1.3.4.1 Define breakpoints based on device usage analytics
+  - 1.3.4.2 Create utility hooks for responsive behavior
+  - 1.3.4.3 Set up responsive typography system
+  - 1.3.4.4 Implement container queries for component-level responsiveness
+  - 1.3.4.5 Create testing utilities for different viewport sizes
+  - 1.3.4.6 Document responsive design patterns for the team
+  - 1.3.4.7 Implement proper touch targets for mobile devices
+  - 1.3.4.8 Set up responsive image handling
 
-- [ ] Configure theme variables and design tokens
-  - Create a comprehensive token system for colors, spacing, typography, etc.
-  - Set up dark mode support with proper color contrast
-  - Implement theme switching capability
-  - Create theme context for global theme state
-  - Set up CSS variables for runtime theme changes
-  - Document theme usage guidelines for developers
-  - Create theme inspector tools for development
-  - Implement proper fallbacks for unsupported browsers
+- [ ] 1.3.5 Configure theme variables and design tokens
+  - 1.3.5.1 Create a comprehensive token system for colors, spacing, typography, etc.
+  - 1.3.5.2 Set up dark mode support with proper color contrast
+  - 1.3.5.3 Implement theme switching capability
+  - 1.3.5.4 Create theme context for global theme state
+  - 1.3.5.5 Set up CSS variables for runtime theme changes
+  - 1.3.5.6 Document theme usage guidelines for developers
+  - 1.3.5.7 Create theme inspector tools for development
+  - 1.3.5.8 Implement proper fallbacks for unsupported browsers
 
 ---
 
