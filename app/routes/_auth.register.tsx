@@ -130,13 +130,15 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-gray-50">
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">Create your Raahi account</CardTitle>
-        </CardHeader>
+    <div className="min-h-screen flex items-center justify-center bg-cover bg-center fixed inset-0"
+         style={{ backgroundImage: 'url("/assets/images/auth-img.webp")' }}>
+      <div className="w-full max-w-md px-4 py-6 relative">
+        <Card className="w-full bg-white shadow-xl max-h-[90vh] overflow-hidden flex flex-col">
+          <CardHeader className="space-y-1 py-4">
+            <CardTitle className="text-xl font-bold text-center">Create your Raahi account</CardTitle>
+          </CardHeader>
 
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-3 overflow-y-auto px-4 py-2">
           {/* Error Alert */}
           {(error || formError) && (
             <Alert variant="destructive">
@@ -150,7 +152,7 @@ export default function RegisterPage() {
 
           {/* Registration Form */}
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
               {/* Name Field */}
               <FormField
                 control={form.control}
@@ -205,7 +207,7 @@ export default function RegisterPage() {
 
                     {/* Password Strength Indicator */}
                     {field.value && (
-                      <div className="mt-2">
+                      <div className="mt-1">
                         <div className="flex space-x-1 h-1">
                           {[1, 2, 3, 4, 5].map((level) => (
                             <div
@@ -222,14 +224,6 @@ export default function RegisterPage() {
                             />
                           ))}
                         </div>
-                        <p className="text-xs mt-1 text-gray-500">
-                          {passwordStrength === 0 && 'Very weak'}
-                          {passwordStrength === 1 && 'Weak'}
-                          {passwordStrength === 2 && 'Fair'}
-                          {passwordStrength === 3 && 'Good'}
-                          {passwordStrength === 4 && 'Strong'}
-                          {passwordStrength === 5 && 'Very strong'}
-                        </p>
                       </div>
                     )}
 
@@ -261,16 +255,16 @@ export default function RegisterPage() {
                 control={form.control}
                 name="acceptTerms"
                 render={({ field }) => (
-                  <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md p-4 border">
+                  <FormItem className="flex flex-row items-start space-x-2 space-y-0 rounded-md p-2 border">
                     <FormControl>
                       <Checkbox
                         checked={field.value}
                         onCheckedChange={field.onChange}
                       />
                     </FormControl>
-                    <div className="space-y-1 leading-none">
-                      <FormLabel>
-                        I accept the <a href="/terms" className="text-blue-600 hover:underline">Terms and Conditions</a> and <a href="/privacy" className="text-blue-600 hover:underline">Privacy Policy</a>
+                    <div className="leading-tight">
+                      <FormLabel className="text-xs">
+                        I accept the <a href="/terms" className="text-blue-600 hover:underline">Terms</a> and <a href="/privacy" className="text-blue-600 hover:underline">Privacy Policy</a>
                       </FormLabel>
                       <FormMessage />
                     </div>
@@ -281,13 +275,13 @@ export default function RegisterPage() {
               {/* Submit Button */}
               <Button
                 type="submit"
-                className="w-full"
+                className="w-full h-9 text-sm"
                 disabled={loading}
               >
                 {loading ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Creating account...
+                    <Loader2 className="mr-2 h-3 w-3 animate-spin" />
+                    Creating...
                   </>
                 ) : (
                   'Create account'
@@ -297,12 +291,12 @@ export default function RegisterPage() {
           </Form>
 
           {/* Divider */}
-          <div className="relative">
+          <div className="relative my-2">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-300"></div>
             </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">Or continue with</span>
+            <div className="relative flex justify-center">
+              <span className="px-2 bg-white text-gray-500 text-xs">Or continue with</span>
             </div>
           </div>
 
@@ -311,12 +305,12 @@ export default function RegisterPage() {
             variant="outline"
             onClick={handleGoogleSignIn}
             disabled={loading}
-            className="w-full"
+            className="w-full h-9 text-sm"
           >
             {loading ? (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             ) : (
-              <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24">
+              <svg className="h-4 w-4 mr-2" viewBox="0 0 24 24">
                 <path
                   d="M12.545 10.239v3.821h5.445c-0.712 2.315-2.647 3.972-5.445 3.972-3.332 0-6.033-2.701-6.033-6.032s2.701-6.032 6.033-6.032c1.498 0 2.866 0.549 3.921 1.453l2.814-2.814c-1.798-1.677-4.198-2.701-6.735-2.701-5.539 0-10.032 4.493-10.032 10.032s4.493 10.032 10.032 10.032c8.445 0 10.452-7.888 9.629-11.732h-9.629z"
                   fill="currentColor"
@@ -327,8 +321,8 @@ export default function RegisterPage() {
           </Button>
         </CardContent>
 
-        <CardFooter>
-          <p className="text-center text-sm text-gray-600 w-full">
+        <CardFooter className="py-3">
+          <p className="text-center text-xs text-gray-600 w-full">
             Already have an account?{' '}
             <a href="/login" className="font-medium text-blue-600 hover:text-blue-500">
               Sign in
@@ -336,6 +330,7 @@ export default function RegisterPage() {
           </p>
         </CardFooter>
       </Card>
+      </div>
     </div>
   );
 }

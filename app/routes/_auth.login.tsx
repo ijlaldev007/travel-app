@@ -89,11 +89,13 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-gray-50">
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">Welcome to Raahi</CardTitle>
-        </CardHeader>
+    <div className="min-h-screen flex items-center justify-center bg-cover bg-center"
+         style={{ backgroundImage: 'url("/assets/images/auth-img.webp")' }}>
+      <div className="w-full max-w-md px-4 py-12">
+        <Card className="w-full bg-white shadow-xl">
+          <CardHeader className="space-y-1">
+            <CardTitle className="text-2xl font-bold text-center">Welcome to Raahi</CardTitle>
+          </CardHeader>
 
         <CardContent className="space-y-4">
           {/* Error Alert */}
@@ -235,6 +237,7 @@ export default function LoginPage() {
           </p>
         </CardFooter>
       </Card>
+      </div>
     </div>
   );
 }

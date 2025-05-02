@@ -1,15 +1,25 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { useAuthContext } from '~/contexts/AuthContext';
 import { useLayout } from '~/contexts/LayoutContext';
 import { sidebarItems } from '~/constants';
 import { SITE_NAME } from '~/constants';
-import { Globe, Bell } from 'lucide-react';
+import { Globe, Bell, LogOut } from 'lucide-react';
 
 export function Sidebar() {
   const location = useLocation();
-  const { user } = useAuthContext();
+  const navigate = useNavigate();
+  const { user, signOut } = useAuthContext();
   const { sidebarOpen, closeSidebar, isMobile } = useLayout();
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      navigate('/login');
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
 
   // If sidebar is closed on mobile, don't render anything
   if (isMobile && !sidebarOpen) {
@@ -109,6 +119,15 @@ export function Sidebar() {
                   </p>
                 </div>
               </div>
+
+              {/* Sign Out Button */}
+              <button
+                onClick={handleSignOut}
+                className="flex items-center w-full px-4 py-3 mt-2 text-sm font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+              >
+                <LogOut className="w-5 h-5 mr-3" />
+                Sign Out
+              </button>
             </div>
           )}
         </div>

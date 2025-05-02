@@ -37,12 +37,15 @@ export const useAuthState = () => {
         setLoading(false);
       },
       (error) => {
+        console.error('onAuthStateChanged error:', error);
         setError(error);
         setLoading(false);
       }
     );
 
-    return () => unsubscribe();
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   return { user, loading, error };
