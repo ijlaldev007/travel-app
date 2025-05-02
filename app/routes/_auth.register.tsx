@@ -4,11 +4,50 @@
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import type { Route } from '@/+types/route';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { Loader2, AlertCircle, User, Check } from 'lucide-react';
 
 import { useAuthContext } from '@/contexts/AuthContext';
 
-export const meta: Route.MetaFunction = () => {
+// UI Components
+import { Button } from '~/components/ui/button';
+import { Input } from '~/components/ui/input';
+import { PasswordInput } from '~/components/ui/password-input';
+import { Checkbox } from '~/components/ui/checkbox';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
+} from '~/components/ui/form';
+import {
+  Alert,
+  AlertTitle,
+  AlertDescription
+} from '~/components/ui/alert';
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '~/components/ui/card';
+
+// Form validation schema
+const registerFormSchema = z.object({
+  name: z.string().min(2, { message: 'Name must be at least 2 characters' }),
+  email: z.string().email({ message: 'Please enter a valid email address' }),
+  password: z.string().min(6, { message: 'Password must be at least 6 characters' }),
+  confirmPassword: z.string(),
+  acceptTerms: z.boolean().refine(val => val === true, {
+    message: 'You must accept the terms and conditions'
+  })
+}).refine(data => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ["confirmPassword"],
+});
+
+type RegisterFormValues = z.infer<typeof registerFormSchema>;
+
+export const meta = () => {
   return [
     { title: 'Register | Raahi' },
     { name: 'description', content: 'Create a new Raahi account' },
@@ -18,35 +57,70 @@ export const meta: Route.MetaFunction = () => {
 export default function RegisterPage() {
   const navigate = useNavigate();
   const { signUp, signInWithGoogle, loading, error, resetError } = useAuthContext();
-  
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [formError, setFormError] = useState('');
+  const [formError, setFormError] = useState<string | null>(null);
+  const [passwordStrength, setPasswordStrength] = useState<number>(0);
 
-  const handleEmailSignUp = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // Initialize form with react-hook-form
+  const form = useForm<RegisterFormValues>({
+    resolver: zodResolver(registerFormSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      acceptTerms: false,
+    },
+  });
+
+  // Calculate password strength
+  const calculatePasswordStrength = (password: string): number => {
+    if (!password) return 0;
+
+    let strength = 0;
+
+    // Length check
+    if (password.length >= 8) strength += 1;
+
+    // Contains lowercase
+    if (/[a-z]/.test(password)) strength += 1;
+
+    // Contains uppercase
+    if (/[A-Z]/.test(password)) strength += 1;
+
+    // Contains number
+    if (/[0-9]/.test(password)) strength += 1;
+
+    // Contains special character
+    if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+
+    return strength;
+  };
+
+  // Handle password change to update strength indicator
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const password = e.target.value;
+    setPasswordStrength(calculatePasswordStrength(password));
+    form.setValue('password', password);
+  };
+
+  // Handle form submission
+  const onSubmit = async (values: RegisterFormValues) => {
     resetError();
-    setFormError('');
-    
-    if (password !== confirmPassword) {
-      setFormError('Passwords do not match');
-      return;
-    }
-    
+    setFormError(null);
+
     try {
-      await signUp(email, password, name);
+      await signUp(values.email, values.password, values.name);
       navigate('/dashboard');
     } catch (err) {
       setFormError('Failed to create account. Please try again.');
     }
   };
 
+  // Handle Google sign-in
   const handleGoogleSignIn = async () => {
     resetError();
-    setFormError('');
-    
+    setFormError(null);
+
     try {
       await signInWithGoogle();
       navigate('/dashboard');
@@ -56,117 +130,206 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="auth">
-      <div className="flex flex-col items-center justify-center w-full max-w-md mx-auto p-8 bg-white rounded-lg shadow-md">
-        <h1 className="text-2xl font-bold mb-6">Create your Raahi account</h1>
-        
-        {(error || formError) && (
-          <div className="w-full p-3 mb-4 bg-red-50 text-red-500 rounded-md">
-            {formError || error?.message}
-          </div>
-        )}
-        
-        <form onSubmit={handleEmailSignUp} className="w-full space-y-4">
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-              Full Name
-            </label>
-            <input
-              id="name"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              minLength={6}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          
-          <div>
-            <label htmlFor="confirm-password" className="block text-sm font-medium text-gray-700 mb-1">
-              Confirm Password
-            </label>
-            <input
-              id="confirm-password"
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-              minLength={6}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
-          >
-            {loading ? 'Creating account...' : 'Create account'}
-          </button>
-        </form>
-        
-        <div className="mt-6 w-full">
-          <div className="relative">
+    <div className="min-h-screen flex items-center justify-center bg-cover bg-center fixed inset-0"
+         style={{ backgroundImage: 'url("/assets/images/auth-img.webp")' }}>
+      <div className="w-full max-w-md px-4 py-6 relative">
+        <Card className="w-full bg-white shadow-xl max-h-[90vh] overflow-hidden flex flex-col">
+          <CardHeader className="space-y-1 py-4">
+            <CardTitle className="text-xl font-bold text-center">Create your Raahi account</CardTitle>
+          </CardHeader>
+
+        <CardContent className="space-y-3 overflow-y-auto px-4 py-2">
+          {/* Error Alert */}
+          {(error || formError) && (
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>Error</AlertTitle>
+              <AlertDescription>
+                {formError || error?.message}
+              </AlertDescription>
+            </Alert>
+          )}
+
+          {/* Registration Form */}
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+              {/* Name Field */}
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Full Name</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Enter your full name"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Email Field */}
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Enter your email"
+                        type="email"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Password Field */}
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <PasswordInput
+                        placeholder="Create a password"
+                        {...field}
+                        onChange={handlePasswordChange}
+                      />
+                    </FormControl>
+
+                    {/* Password Strength Indicator */}
+                    {field.value && (
+                      <div className="mt-1">
+                        <div className="flex space-x-1 h-1">
+                          {[1, 2, 3, 4, 5].map((level) => (
+                            <div
+                              key={level}
+                              className={`h-full w-full rounded-sm ${
+                                level <= passwordStrength
+                                  ? level <= 2
+                                    ? 'bg-red-500'
+                                    : level <= 4
+                                      ? 'bg-yellow-500'
+                                      : 'bg-green-500'
+                                  : 'bg-gray-200'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Confirm Password Field */}
+              <FormField
+                control={form.control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Confirm Password</FormLabel>
+                    <FormControl>
+                      <PasswordInput
+                        placeholder="Confirm your password"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Terms and Conditions */}
+              <FormField
+                control={form.control}
+                name="acceptTerms"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-start space-x-2 space-y-0 rounded-md p-2 border">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <div className="leading-tight">
+                      <FormLabel className="text-xs">
+                        I accept the <a href="/terms" className="text-blue-600 hover:underline">Terms</a> and <a href="/privacy" className="text-blue-600 hover:underline">Privacy Policy</a>
+                      </FormLabel>
+                      <FormMessage />
+                    </div>
+                  </FormItem>
+                )}
+              />
+
+              {/* Submit Button */}
+              <Button
+                type="submit"
+                className="w-full h-9 text-sm"
+                disabled={loading}
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="mr-2 h-3 w-3 animate-spin" />
+                    Creating...
+                  </>
+                ) : (
+                  'Create account'
+                )}
+              </Button>
+            </form>
+          </Form>
+
+          {/* Divider */}
+          <div className="relative my-2">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-300"></div>
             </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">Or continue with</span>
+            <div className="relative flex justify-center">
+              <span className="px-2 bg-white text-gray-500 text-xs">Or continue with</span>
             </div>
           </div>
-          
-          <div className="mt-6">
-            <button
-              onClick={handleGoogleSignIn}
-              disabled={loading}
-              className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
-            >
-              <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24">
+
+          {/* Google Sign In */}
+          <Button
+            variant="outline"
+            onClick={handleGoogleSignIn}
+            disabled={loading}
+            className="w-full h-9 text-sm"
+          >
+            {loading ? (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            ) : (
+              <svg className="h-4 w-4 mr-2" viewBox="0 0 24 24">
                 <path
                   d="M12.545 10.239v3.821h5.445c-0.712 2.315-2.647 3.972-5.445 3.972-3.332 0-6.033-2.701-6.033-6.032s2.701-6.032 6.033-6.032c1.498 0 2.866 0.549 3.921 1.453l2.814-2.814c-1.798-1.677-4.198-2.701-6.735-2.701-5.539 0-10.032 4.493-10.032 10.032s4.493 10.032 10.032 10.032c8.445 0 10.452-7.888 9.629-11.732h-9.629z"
                   fill="currentColor"
                 />
               </svg>
-              Google
-            </button>
-          </div>
-        </div>
-        
-        <p className="mt-8 text-center text-sm text-gray-600">
-          Already have an account?{' '}
-          <a href="/login" className="font-medium text-blue-600 hover:text-blue-500">
-            Sign in
-          </a>
-        </p>
+            )}
+            Google
+          </Button>
+        </CardContent>
+
+        <CardFooter className="py-3">
+          <p className="text-center text-xs text-gray-600 w-full">
+            Already have an account?{' '}
+            <a href="/login" className="font-medium text-blue-600 hover:text-blue-500">
+              Sign in
+            </a>
+          </p>
+        </CardFooter>
+      </Card>
       </div>
     </div>
   );
